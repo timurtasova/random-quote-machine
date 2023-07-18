@@ -1,9 +1,19 @@
 import './App.css';
-import { useState } from 'react';
-import RandomQuote from "./components/RandomQuote";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import QuoteBox from './components/QuoteBox';
 
 function App() {
-    const [rerender, setRerender] = useState(false);
+    const [quote, setQuote] = useState({});
+
+    const fetchQuote = async() => {
+        const response = await axios.get('https://api.quotable.io/quotes/random');
+        setQuote(response.data[0]);
+    };
+
+    useEffect(() => {
+        fetchQuote();
+    }, []);
 
     const colors = [
         '#16a085',
@@ -24,13 +34,14 @@ function App() {
 
     document.body.style.backgroundColor = randomColor;
 
-    const handleChangeQuote = () => {
-        setRerender(!rerender);
+    const handleChangeQuote = async() => {
+        const response = await axios.get('https://api.quotable.io/quotes/random');
+        setQuote(response.data[0]);
     }
 
     return (
         <div>
-            <RandomQuote color={randomColor} onChange={handleChangeQuote} />
+            <QuoteBox color={randomColor} onChange={handleChangeQuote} quote={quote} />
         </div>
     );
 }

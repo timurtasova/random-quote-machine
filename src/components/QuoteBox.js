@@ -2,9 +2,9 @@ import QuoteText from "./QuoteText";
 import { BsTwitter } from 'react-icons/bs';
 import { FaTumblr } from "react-icons/fa";
 
-function QuoteBox({ quote, color, onChange }) {
-    const text = quote.quote.split(' ').join('%20');
-    const author = quote.author.split(' ').join('%20');
+function QuoteBox({ color, onChange, quote }) {
+    const text = quote.content;
+    const author = quote.author;
     const tweet = `${text}%20${author}%20%23quotes`;
 
     const handleClick = () => {
